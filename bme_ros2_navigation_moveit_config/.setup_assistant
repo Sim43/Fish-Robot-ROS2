@@ -1,0 +1,10 @@
+moveit_setup_assistant_config:
+  urdf:
+    package: bme_ros2_navigation
+    relative_path: urdf/mogi_bot.urdf
+  srdf:
+    relative_path: config/mogi_bot.srdf
+  package_settings:
+    author_name: zero
+    author_email: zero@conquest.com
+    generated_timestamp: 1743959551
