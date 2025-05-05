@@ -20,8 +20,8 @@
 
   <gazebo>
     <plugin
-      filename="BasicSystem"
-      name="ros_gz_example_gazebo::BasicSystem">
+      filename="FullSystem"
+      name="ros_gz_example_gazebo::FullSystem">
     </plugin>
   </gazebo>
 
