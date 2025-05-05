@@ -254,7 +254,7 @@ def generate_launch_description():
     launchDescriptionObject.add_action(relay_camera_info_node)
     launchDescriptionObject.add_action(robot_state_publisher_node)
     # launchDescriptionObject.add_action(trajectory_node)
-    launchDescriptionObject.add_action(odom_node)
+    # launchDescriptionObject.add_action(odom_node)
     # launchDescriptionObject.add_action(obj_det_node)
     launchDescriptionObject.add_action(fish_controller)
     launchDescriptionObject.add_action(load_joint_state_controller)
