@@ -18,18 +18,6 @@
     </plugin>
   </gazebo>
 
-  <gazebo>
-    <plugin name="ros_gz_example_gazebo::FullSystem" filename="FullSystem">
-      <odom_publish_frequency>50</odom_publish_frequency>
-      <frame_id>odom</frame_id>
-      <child_frame_id>base_link</child_frame_id>
-      <odom_topic>/custom_odom_topic</odom_topic>
-      <joint_1>joint_1</joint_1>
-      <joint_2>joint_2</joint_2>
-      <joint_3>joint_3</joint_3>
-      <joint_4>joint_4</joint_4>
-    </plugin>
-  </gazebo>
 
   <!-- <gazebo>
     <plugin
