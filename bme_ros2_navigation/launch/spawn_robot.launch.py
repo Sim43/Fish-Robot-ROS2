@@ -133,6 +133,15 @@ def generate_launch_description():
         parameters=[{'use_sim_time': True}]
     )
 
+    tf_pub_node = Node(
+        package='bme_ros2_navigation',
+        executable='tf_publisher.py',
+        name='mogi_bot_tf_pub_node',
+        output='screen',
+        parameters=[{'use_sim_time': True}]
+    )
+
+
     obj_det_node = Node(
         package='bme_ros2_navigation',
         executable='object_detection_node.py',
@@ -194,7 +203,8 @@ def generate_launch_description():
     launchDescriptionObject.add_action(gz_bridge_node)
     launchDescriptionObject.add_action(gz_image_bridge_node)
     launchDescriptionObject.add_action(robot_state_publisher_node)
-    launchDescriptionObject.add_action(odom_node)
+    # launchDescriptionObject.add_action(tf_pub_node)
+    # launchDescriptionObject.add_action(odom_node)
     # launchDescriptionObject.add_action(obj_det_node)
     launchDescriptionObject.add_action(fish_controller)
     launchDescriptionObject.add_action(load_joint_state_controller)
