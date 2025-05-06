@@ -14,16 +14,6 @@ def generate_launch_description():
     gazebo_models_path, ignore_last_dir = os.path.split(pkg_bme_ros2_navigation)
     os.environ["GZ_SIM_RESOURCE_PATH"] += os.pathsep + gazebo_models_path
 
-    rviz_launch_arg = DeclareLaunchArgument(
-        'rviz', default_value='true',
-        description='Open RViz'
-    )
-
-    rviz_config_arg = DeclareLaunchArgument(
-        'rviz_config', default_value='rviz.rviz',
-        description='RViz config file'
-    )
-
     world_arg = DeclareLaunchArgument(
         'world', default_value='fish_world.sdf',
         description='Name of the Gazebo world file to load'
@@ -52,13 +42,6 @@ def generate_launch_description():
         'gz_bridge.yaml'
     )
 
-    # Generate path to config file
-    interactive_marker_config_file_path = os.path.join(
-        get_package_share_directory('interactive_marker_twist_server'),
-        'config',
-        'linear.yaml'
-    )
-
     world_launch = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
             os.path.join(pkg_bme_ros2_navigation, 'launch', 'world.launch.py'),
@@ -66,17 +49,6 @@ def generate_launch_description():
         launch_arguments={
         'world': LaunchConfiguration('world'),
         }.items()
-    )
-
-    # Launch rviz
-    rviz_node = Node(
-        package='rviz2',
-        executable='rviz2',
-        arguments=['-d', PathJoinSubstitution([pkg_bme_ros2_navigation, 'rviz', LaunchConfiguration('rviz_config')])],
-        condition=IfCondition(LaunchConfiguration('rviz')),
-        parameters=[
-            {'use_sim_time': LaunchConfiguration('use_sim_time')},
-        ]
     )
 
     # Spawn the URDF model using the `/world/<world_name>/create` service
@@ -127,18 +99,6 @@ def generate_launch_description():
         ],
     )
 
-    # Relay node to republish camera_info to /camera_info
-    relay_camera_info_node = Node(
-        package='topic_tools',
-        executable='relay',
-        name='relay_camera_info',
-        output='screen',
-        arguments=['camera/camera_info', 'camera/image/camera_info'],
-        parameters=[
-            {'use_sim_time': LaunchConfiguration('use_sim_time')},
-        ]
-    )
-
     robot_state_publisher_node = Node(
         package='robot_state_publisher',
         executable='robot_state_publisher',
@@ -152,13 +112,6 @@ def generate_launch_description():
             ('/tf', 'tf'),
             ('/tf_static', 'tf_static')
         ]
-    )
-
-    trajectory_node = Node(
-        package='mogi_trajectory_server',
-        executable='mogi_trajectory_server',
-        name='mogi_trajectory_server',
-        parameters=[{'reference_frame_id': 'map'}]
     )
 
     ekf_node = Node(
@@ -186,14 +139,6 @@ def generate_launch_description():
         name='object_detection_node',
         output='screen',
         parameters=[{'use_sim_time': True}]
-    )
-
-    interactive_marker_twist_server_node = Node(
-        package='interactive_marker_twist_server',
-        executable='marker_server',
-        name='twist_server_node',
-        parameters=[interactive_marker_config_file_path],
-        output='screen',
     )
 
     # Joint State Broadcaster
@@ -241,25 +186,19 @@ def generate_launch_description():
 
     launchDescriptionObject = LaunchDescription()
 
-    #launchDescriptionObject.add_action(rviz_launch_arg)
-    #launchDescriptionObject.add_action(rviz_config_arg)
     launchDescriptionObject.add_action(world_arg)
     launchDescriptionObject.add_action(model_arg)
     launchDescriptionObject.add_action(sim_time_arg)
     launchDescriptionObject.add_action(world_launch)
-    #launchDescriptionObject.add_action(rviz_node)
     launchDescriptionObject.add_action(spawn_urdf_node)
     launchDescriptionObject.add_action(gz_bridge_node)
     launchDescriptionObject.add_action(gz_image_bridge_node)
-    launchDescriptionObject.add_action(relay_camera_info_node)
     launchDescriptionObject.add_action(robot_state_publisher_node)
-    # launchDescriptionObject.add_action(trajectory_node)
     launchDescriptionObject.add_action(odom_node)
     # launchDescriptionObject.add_action(obj_det_node)
     launchDescriptionObject.add_action(fish_controller)
     launchDescriptionObject.add_action(load_joint_state_controller)
     launchDescriptionObject.add_action(load_forward_velocity_controller)
     launchDescriptionObject.add_action(ekf_node)
-    #launchDescriptionObject.add_action(interactive_marker_twist_server_node)
 
     return launchDescriptionObject
