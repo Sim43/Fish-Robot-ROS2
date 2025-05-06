@@ -44,8 +44,6 @@ install(DIRECTORY
 install(PROGRAMS
     src/publisher.py
     src/object_detection_node.py
-    src/odom_node.py
-    src/tf_publisher.py
     DESTINATION lib/${PROJECT_NAME}
 )
 
