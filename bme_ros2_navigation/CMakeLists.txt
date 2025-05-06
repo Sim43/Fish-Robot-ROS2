@@ -42,7 +42,6 @@ install(DIRECTORY
 
 # Install Python scripts
 install(PROGRAMS
-    src/odom_node.py
     src/publisher.py
     src/object_detection_node.py
     DESTINATION lib/${PROJECT_NAME}

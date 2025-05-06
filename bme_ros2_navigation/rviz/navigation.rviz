@@ -155,14 +155,16 @@ Visualization Manager:
           odom:
             base_footprint:
               base_link:
+                second_link:
+                  third_link:
+                    tail_link:
+                      {}
+                    thruster_link:
+                      {}
                 camera_link:
                   camera_link_optical:
                     {}
                 imu_link:
-                  {}
-                left_wheel:
-                  {}
-                right_wheel:
                   {}
                 scan_link:
                   {}

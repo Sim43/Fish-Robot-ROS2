@@ -20,7 +20,7 @@ def generate_launch_description():
     )
 
     rviz_config_arg = DeclareLaunchArgument(
-        'rviz_config', default_value='mapping.rviz',
+        'rviz_config', default_value='localization.rviz',
         description='RViz config file'
     )
 
@@ -60,14 +60,6 @@ def generate_launch_description():
         ]
     )
 
-    interactive_marker_twist_server_node = Node(
-        package='interactive_marker_twist_server',
-        executable='marker_server',
-        name='twist_server_node',
-        parameters=[interactive_marker_config_file_path],
-        output='screen',
-    )
-
     slam_toolbox_launch = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(slam_toolbox_launch_path),
         launch_arguments={
@@ -82,7 +74,6 @@ def generate_launch_description():
     launchDescriptionObject.add_action(rviz_config_arg)
     launchDescriptionObject.add_action(sim_time_arg)
     launchDescriptionObject.add_action(rviz_node)
-    launchDescriptionObject.add_action(interactive_marker_twist_server_node)
     launchDescriptionObject.add_action(slam_toolbox_launch)
 
     return launchDescriptionObject

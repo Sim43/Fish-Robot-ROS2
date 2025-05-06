@@ -29,13 +29,6 @@ def generate_launch_description():
         description='Flag to enable use_sim_time'
     )
 
-    # Generate path to config file
-    interactive_marker_config_file_path = os.path.join(
-        get_package_share_directory('interactive_marker_twist_server'),
-        'config',
-        'linear.yaml'
-    )
-
     nav2_navigation_launch_path = os.path.join(
         get_package_share_directory('nav2_bringup'),
         'launch',
@@ -63,14 +56,6 @@ def generate_launch_description():
         parameters=[
             {'use_sim_time': LaunchConfiguration('use_sim_time')},
         ]
-    )
-
-    interactive_marker_twist_server_node = Node(
-        package='interactive_marker_twist_server',
-        executable='marker_server',
-        name='twist_server_node',
-        parameters=[interactive_marker_config_file_path],
-        output='screen',
     )
 
     # Path to the Slam Toolbox launch file
@@ -102,7 +87,6 @@ def generate_launch_description():
     launchDescriptionObject.add_action(rviz_config_arg)
     launchDescriptionObject.add_action(sim_time_arg)
     launchDescriptionObject.add_action(rviz_node)
-    #launchDescriptionObject.add_action(interactive_marker_twist_server_node)
     launchDescriptionObject.add_action(slam_toolbox_launch)
     launchDescriptionObject.add_action(navigation_launch)
 
