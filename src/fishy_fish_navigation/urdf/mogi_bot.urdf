@@ -3,10 +3,10 @@
 <robot name="mogi_bot" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
   <!-- STEP 3 - Gazebo plugin -->
-  <xacro:include filename="$(find bme_ros2_navigation)/urdf/mogi_bot.gazebo" />
+  <xacro:include filename="$(find fishy_fish_navigation)/urdf/mogi_bot.gazebo" />
 
   <!-- STEP 4 - RViz colors -->
-  <xacro:include filename="$(find bme_ros2_navigation)/urdf/materials.xacro" />
+  <xacro:include filename="$(find fishy_fish_navigation)/urdf/materials.xacro" />
 
   <!-- STEP 1 - Head Link -->
   <link name="base_footprint"></link>
@@ -26,14 +26,14 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh filename = "package://bme_ros2_navigation/meshes/base_link.STL"/>
+        <mesh filename = "package://fishy_fish_navigation/meshes/base_link.STL"/>
       </geometry>
       <material name="blue"/>
     </visual>
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh filename = "package://bme_ros2_navigation/meshes/base_link.STL"/>
+        <mesh filename = "package://fishy_fish_navigation/meshes/base_link.STL"/>
       </geometry>
     </collision>
   </link>
@@ -87,14 +87,14 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh filename = "package://bme_ros2_navigation/meshes/second_link.STL"/>
+        <mesh filename = "package://fishy_fish_navigation/meshes/second_link.STL"/>
       </geometry>
       <material name="red"/>
     </visual>
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh filename = "package://bme_ros2_navigation/meshes/second_link.STL"/>
+        <mesh filename = "package://fishy_fish_navigation/meshes/second_link.STL"/>
       </geometry>
     </collision>
   </link>
@@ -116,14 +116,14 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh filename = "package://bme_ros2_navigation/meshes/third_link.STL"/>
+        <mesh filename = "package://fishy_fish_navigation/meshes/third_link.STL"/>
       </geometry>
       <material name="orange"/>
     </visual>
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh filename = "package://bme_ros2_navigation/meshes/third_link.STL"/>
+        <mesh filename = "package://fishy_fish_navigation/meshes/third_link.STL"/>
       </geometry>
     </collision>
   </link>
@@ -145,14 +145,14 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh filename = "package://bme_ros2_navigation/meshes/tail_link.STL"/>
+        <mesh filename = "package://fishy_fish_navigation/meshes/tail_link.STL"/>
       </geometry>
       <material name="black"/>
     </visual>
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh filename = "package://bme_ros2_navigation/meshes/tail_link.STL"/>
+        <mesh filename = "package://fishy_fish_navigation/meshes/tail_link.STL"/>
       </geometry>
     </collision>
   </link>
@@ -252,7 +252,7 @@
     <visual name='scan_link_visual'>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh filename = "package://bme_ros2_navigation/meshes/lidar.dae"/>
+        <mesh filename = "package://fishy_fish_navigation/meshes/lidar.dae"/>
       </geometry>
     </visual>
 

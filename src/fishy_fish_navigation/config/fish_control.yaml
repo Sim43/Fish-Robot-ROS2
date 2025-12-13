@@ -3,7 +3,7 @@ controller_manager:
     update_rate: 1000 # Hz, to match the simulation rate
 
     forward_velocity_controller:
-      type: forward_command_controller/ForwardCommandController
+      type: velocity_controllers/JointGroupVelocityController
 
     joint_state_broadcaster:
       type: joint_state_broadcaster/JointStateBroadcaster
@@ -15,10 +15,3 @@ forward_velocity_controller:
       - joint_2
       - joint_3
       - joint_4
-      
-    interface_name: velocity
-    command_interfaces:
-      - velocity
-    state_interfaces:
-      - position
-      - velocity

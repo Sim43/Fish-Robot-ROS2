@@ -10,7 +10,7 @@ class MapLoaderNode(Node):
         super().__init__('map_loader_node')
 
         # Declare and get the 'map_file' parameter
-        self.declare_parameter('map_file', 'bme_ros2_navigation/maps/serialized')
+        self.declare_parameter('map_file', 'fishy_fish_navigation/maps/serialized')
         map_file_param = self.get_parameter('map_file').get_parameter_value().string_value
 
         # Extract package name and map file path from the parameter

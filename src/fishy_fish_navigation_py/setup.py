@@ -1,6 +1,6 @@
 from setuptools import find_packages, setup
 
-package_name = 'bme_ros2_navigation_py'
+package_name = 'fishy_fish_navigation_py'
 
 setup(
     name=package_name,
@@ -15,14 +15,14 @@ setup(
     zip_safe=True,
     maintainer='David Dudas',
     maintainer_email='david.dudas@outlook.com',
-    description='Python nodes for slam, localization and navigation with Gazebo Harmonic and ROS Jazzy for BME MOGI ROS2 course',
+    description='Python nodes for slam, localization and navigation with Gazebo Harmonic and ROS Jazzy for Fish Robot ROS2',
     license='Apache License 2.0',
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'send_initialpose = bme_ros2_navigation_py.send_initialpose:main',
-            'slam_toolbox_load_map = bme_ros2_navigation_py.slam_toolbox_load_map:main',
-            'follow_waypoints = bme_ros2_navigation_py.follow_waypoints:main'
+            'send_initialpose = fishy_fish_navigation_py.send_initialpose:main',
+            'slam_toolbox_load_map = fishy_fish_navigation_py.slam_toolbox_load_map:main',
+            'follow_waypoints = fishy_fish_navigation_py.follow_waypoints:main'
         ],
     },
 )

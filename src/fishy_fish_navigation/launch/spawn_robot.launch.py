@@ -9,9 +9,9 @@ from ament_index_python.packages import get_package_share_directory
 
 def generate_launch_description():
 
-    pkg_bme_ros2_navigation = get_package_share_directory('bme_ros2_navigation')
+    pkg_fishy_fish_navigation = get_package_share_directory('fishy_fish_navigation')
 
-    gazebo_models_path, ignore_last_dir = os.path.split(pkg_bme_ros2_navigation)
+    gazebo_models_path, ignore_last_dir = os.path.split(pkg_fishy_fish_navigation)
     os.environ["GZ_SIM_RESOURCE_PATH"] += os.pathsep + gazebo_models_path
 
     world_arg = DeclareLaunchArgument(
@@ -31,20 +31,20 @@ def generate_launch_description():
 
     # Define the path to your URDF or Xacro file
     urdf_file_path = PathJoinSubstitution([
-        pkg_bme_ros2_navigation,  # Replace with your package name
+        pkg_fishy_fish_navigation,  # Replace with your package name
         "urdf",
         LaunchConfiguration('model')  # Replace with your URDF or Xacro file
     ])
 
     gz_bridge_params_path = os.path.join(
-        get_package_share_directory('bme_ros2_navigation'),
+        get_package_share_directory('fishy_fish_navigation'),
         'config',
         'gz_bridge.yaml'
     )
 
     world_launch = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
-            os.path.join(pkg_bme_ros2_navigation, 'launch', 'world.launch.py'),
+            os.path.join(pkg_fishy_fish_navigation, 'launch', 'world.launch.py'),
         ),
         launch_arguments={
         'world': LaunchConfiguration('world'),
@@ -120,13 +120,13 @@ def generate_launch_description():
         name='ekf_filter_node',
         output='screen',
         parameters=[
-            os.path.join(pkg_bme_ros2_navigation, 'config', 'ekf.yaml'),
+            os.path.join(pkg_fishy_fish_navigation, 'config', 'ekf.yaml'),
             {'use_sim_time': LaunchConfiguration('use_sim_time')},
             ]
     )
 
     obj_det_node = Node(
-        package='bme_ros2_navigation',
+        package='fishy_fish_navigation',
         executable='object_detection_node.py',
         name='object_detection_node',
         output='screen',
@@ -167,7 +167,7 @@ def generate_launch_description():
         period=20.0,  # Delay in seconds
         actions=[
                 Node(
-                    package= 'bme_ros2_navigation',
+                    package= 'fishy_fish_navigation',
                     executable ='publisher.py',
                     name='fish_controller',
                     output = 'screen'
