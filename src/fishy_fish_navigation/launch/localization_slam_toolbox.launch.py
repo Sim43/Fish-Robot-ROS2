@@ -60,11 +60,19 @@ def generate_launch_description():
         ]
     )
 
+    # Resolve map file path using package share directory
+    map_file_path = os.path.join(
+        get_package_share_directory('fishy_fish_navigation'),
+        'maps',
+        'serialized'
+    )
+
     slam_toolbox_launch = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(slam_toolbox_launch_path),
         launch_arguments={
                 'use_sim_time': LaunchConfiguration('use_sim_time'),
                 'slam_params_file': slam_toolbox_params_path,
+                'map_file_name': map_file_path,
         }.items()
     )
 

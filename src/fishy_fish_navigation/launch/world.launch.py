@@ -16,9 +16,11 @@ def generate_launch_description():
     pkg_fishy_fish_navigation = get_package_share_directory('fishy_fish_navigation')
     pkg_ros_gz_sim = get_package_share_directory('ros_gz_sim')
 
-    # Add your own gazebo library path here
-    gazebo_models_path = "/home/david/gazebo_models"
-    os.environ["GZ_SIM_RESOURCE_PATH"] += os.pathsep + gazebo_models_path
+    # Add custom gazebo models path if environment variable is set
+    # Users can set GZ_SIM_CUSTOM_MODELS_PATH environment variable to add their own models
+    custom_models_path = os.environ.get('GZ_SIM_CUSTOM_MODELS_PATH', '')
+    if custom_models_path:
+        os.environ["GZ_SIM_RESOURCE_PATH"] += os.pathsep + custom_models_path
 
 
     gazebo_launch = IncludeLaunchDescription(
