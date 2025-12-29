@@ -107,10 +107,6 @@ def generate_launch_description():
         parameters=[
             {'robot_description': Command(['xacro', ' ', urdf_file_path]),
              'use_sim_time': LaunchConfiguration('use_sim_time')},
-        ],
-        remappings=[
-            ('/tf', 'tf'),
-            ('/tf_static', 'tf_static')
         ]
     )
 
@@ -123,6 +119,69 @@ def generate_launch_description():
             os.path.join(pkg_fishy_fish_navigation, 'config', 'ekf.yaml'),
             {'use_sim_time': LaunchConfiguration('use_sim_time')},
             ]
+    )
+
+    # Static transforms for Gazebo sensor frames
+    # Gazebo (via ros_gz_bridge) uses namespaced frame_ids like
+    # 'mogi_bot/base_footprint/gpu_lidar' and 'mogi_bot/base_footprint/imu'
+    # in the LaserScan and Imu messages. These frames don't exist in the TF
+    # tree published by robot_state_publisher, which causes message filters
+    # in RViz and slam_toolbox to drop messages and prevents mapping.
+    #
+    # We publish zero-offset static transforms from the logical URDF frames
+    # to these Gazebo sensor frames so that TF has a complete chain:
+    #   base_footprint -> base_link -> scan_link -> mogi_bot/base_footprint/gpu_lidar
+    #   base_footprint -> base_link -> imu_link  -> mogi_bot/base_footprint/imu
+
+    static_tf_laser = Node(
+        package='tf2_ros',
+        executable='static_transform_publisher',
+        name='static_tf_laser',
+        arguments=[
+            '0', '0', '0',        # x y z
+            '0', '0', '0',        # roll pitch yaw
+            'scan_link',          # parent frame (URDF)
+            'mogi_bot/base_footprint/gpu_lidar',  # child frame (Gazebo sensor frame_id)
+        ],
+        parameters=[
+            {'use_sim_time': LaunchConfiguration('use_sim_time')},
+        ],
+        output='screen',
+    )
+
+    static_tf_imu = Node(
+        package='tf2_ros',
+        executable='static_transform_publisher',
+        name='static_tf_imu',
+        arguments=[
+            '0', '0', '0',
+            '0', '0', '0',
+            'imu_link',
+            'mogi_bot/base_footprint/imu',
+        ],
+        parameters=[
+            {'use_sim_time': LaunchConfiguration('use_sim_time')},
+        ],
+        output='screen',
+    )
+
+    # Initial static transform from odom to base_footprint
+    # This ensures the TF tree is complete from the start.
+    # The EKF will update this transform once it starts receiving odometry data.
+    static_tf_odom = Node(
+        package='tf2_ros',
+        executable='static_transform_publisher',
+        name='static_tf_odom_initial',
+        arguments=[
+            '0', '0', '0',
+            '0', '0', '0',
+            'odom',
+            'base_footprint',
+        ],
+        parameters=[
+            {'use_sim_time': LaunchConfiguration('use_sim_time')},
+        ],
+        output='screen',
     )
 
     obj_det_node = Node(
@@ -190,6 +249,9 @@ def generate_launch_description():
     launchDescriptionObject.add_action(fish_controller)
     launchDescriptionObject.add_action(load_joint_state_controller)
     launchDescriptionObject.add_action(load_forward_velocity_controller)
+    launchDescriptionObject.add_action(static_tf_odom)
     launchDescriptionObject.add_action(ekf_node)
+    launchDescriptionObject.add_action(static_tf_laser)
+    launchDescriptionObject.add_action(static_tf_imu)
 
     return launchDescriptionObject

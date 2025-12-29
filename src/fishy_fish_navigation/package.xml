@@ -4,7 +4,7 @@
   <name>fishy_fish_navigation</name>
   <version>1.0.0</version>
   <description>Using slam, localization and navigation with Gazebo Harmonic and ROS Jazzy for Fish Robot ROS2</description>
-  <maintainer email="david.dudas@outlook.com">David Dudas</maintainer>
+  <maintainer email="masimwork43@gmail.com">Asim Khan</maintainer>
   <license>Apache License 2.0</license>
 
   <buildtool_depend>ament_cmake</buildtool_depend>
